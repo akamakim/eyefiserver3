@@ -98,7 +98,7 @@ class Daemon:
                 # exit first parent
 #                            sys.exit(0)
                 return 0
-        except OSError, e:
+        except OSError as e:
             sys.stderr.write("fork #1 failed: %d (%s)\n" \
                              % (e.errno, e.strerror))
             sys.exit(1)
@@ -115,7 +115,7 @@ class Daemon:
                 # exit from second parent
 #                            sys.exit(0)
                 return 1
-        except OSError, e:
+        except OSError as e:
             sys.stderr.write("fork #2 failed: %d (%s)\n" \
                              % (e.errno, e.strerror))
             sys.exit(1)
@@ -183,7 +183,7 @@ class Daemon:
             while 1:
                 os.kill(pid, SIGTERM)
                 time.sleep(0.1)
-        except OSError, err:
+        except OSError as err:
             err = str(err)
             if err.find("No such process") > 0:
                 if os.path.exists(self.pidfile):
@@ -210,7 +210,7 @@ class Daemon:
                 while 1:
                     os.kill(pid, SIGTERM)
                     time.sleep(0.1)
-            except OSError, err:
+            except OSError as err:
                 err = str(err)
                 if err.find("No such process") > 0:
                     if os.path.exists(self.pidfile):
@@ -245,7 +245,7 @@ class Daemon:
         # Try killing the daemon process
         try:
             os.kill(pid, signal.SIGUSR1)
-        except OSError, err:
+        except OSError as err:
             print str(err)
 
     def status(self):
@@ -365,7 +365,7 @@ class EyeFiServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
         while self.run:
             try:
                 self.handle_request()
-            except select.error, e:
+            except select.error as e:
                 if e[0] != errno.EINTR:
                     raise e
 
@@ -702,7 +702,7 @@ class EyeFiRequestHandler(BaseHTTPRequestHandler):
         # eyeFiLogger.debug("Extracting TAR file " + imageTarPath)
         try:
             imageTarfile = tarfile.open(imageTarPath)
-        except ReadError, error:
+        except ReadError as error:
             eyeFiLogger.error("Failed to open %s" % imageTarPath)
             raise
 
