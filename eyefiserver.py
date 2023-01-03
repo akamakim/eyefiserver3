@@ -916,7 +916,7 @@ class EyeFiRequestHandler(BaseHTTPRequestHandler):
                 macs[index] = value
         d = {}
         for key in macs.keys():
-            d[macs[key]] = upload_keys[key]
+            d[macs[key].lower()] = upload_keys[key]
         return d
 
     def startSession(self, postData):
@@ -929,7 +929,7 @@ class EyeFiRequestHandler(BaseHTTPRequestHandler):
         # Retrieve it from C:\Documents and Settings\<User>\Application Data\Eye-Fi\Settings.xml
         mac_to_uploadkey_map = self._get_mac_uploadkey_dict()
         mac = handler.extractedElements["macaddress"]
-        upload_key = mac_to_uploadkey_map[mac]
+        upload_key = mac_to_uploadkey_map[mac.lower()]
         # eyeFiLogger.debug("Got MAC address of " + mac)
         # eyeFiLogger.debug("Setting Eye-Fi upload key to " + upload_key)
 
